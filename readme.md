@@ -138,4 +138,4 @@ export default {
 	}
 </style>
 ```
-### 更多用法请查看 pages/examples/linkage.vue
+### 更多用法请查看demo /pages/examples/linkage.vue
