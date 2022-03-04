@@ -96,7 +96,7 @@ export default {
 	  // 源数据，必传
 	  propsData: [ 
 	  	{			
-	  	   "id":78,
+	  	   "code":78,
 			   "value":"管理岗",
 	  	   "sub":[
 	  		 { "code":80,  "value":"总经理" },
@@ -116,7 +116,7 @@ export default {
     // 获取返回的数据
     getResult(data){
         console.log('get result from component:', data)
-		this.resultData = data
+		this.initData = data
 	}
   }
 }
