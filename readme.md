@@ -6,8 +6,8 @@
 
 > **代码块： `uiPopupLinkage`**
 
-基于uni-popup的双联动tab弹框，实现了双向划、自动置顶，支持用户自定义传入数据的keyname，H5端做了去滚动条处理，
-组件实现简单，查看demo请查看 /pages/examples/linkage.vue
+基于uni-popup的双联动tab弹框，实现了双向联动、可自动滚动至所选项，支持用户自定义传入数据的keyname，H5端做了去滚动条处理，
+组件实现简单，了解更多请查看 /pages/examples/linkage.vue
 
 注意：本组件基于 uni-popup、uni-transition实现弹框与滚动效果，使用前请先确保这两个组件已下载，否则无法执行
 
@@ -87,7 +87,7 @@ export default {
 	  	1，因为示例数据中idType为"code"，则修改"idType"的值为"code"
 	  	2，因为示例数据中nameType为"value"，则修改"idType"的值为"value"
 	  	3，subType的值与默认值相同，则无需修改，可以不传
-	  	所以：只需要修改与默认值不同的keyname即可，相同的可以不传，若都相同，则该参数可以不传
+	  	注意：只需要修改与默认值不同的keyname即可，相同的可以不传，若都相同，则该参数可以不传
 	   */
 	  objType: {
 	  	idType: "code",
