@@ -141,10 +141,10 @@ export default {
 
 ## API
 
-### linkage Props 
+#### linkage Props 
 
 |属性名|类型|默认值|是否必传|说明|
-|:-:|:-:|:-:|:-:|
+|:-:|:-:|:-:|:-:|:-:|
 |propsData|Array|[]|是|源数据，大类与子类必须具备相同的id、name|
 |initData|Object|{}|否|需要定义默认选中项时传值|
 |objType|Object|{idType:id,nameType:name,subType:sub}|否|当propsData中对应的keyname（id、name、sub）与默认值不同时传值|
@@ -158,10 +158,10 @@ export default {
 
 **initData使用时，其格式与result返回格式一样，故可以将result返回的值直接赋值给initData,用来做结果显示**
 
-### linkage Events
+#### linkage Events
 
 |事件称名|说明|返回值|备注|
-|:-:|:-:|:-:|备注|
+|:-:|:-:|:-:|:-:|
 |result|组件返回的值|e={item: Object, subItem: Object}|result返回格式与initData的格式一致  |
 
 #### result 返回值
