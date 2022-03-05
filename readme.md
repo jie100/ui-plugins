@@ -4,12 +4,12 @@
 
 > **关联组件： `uni-popup`、`uni-transition`**
 
-> **代码块： `uPopupLinkage`**
+> **代码块： `uiPopupLinkage`**
 
 基于uni-popup的双联动tab弹框，实现了双向划、自动置顶，支持用户自定义传入数据的keyname，H5端做了去滚动条处理，
 组件实现简单，查看demo请查看 /pages/examples/linkage.vue
 
-注意：本组件基于 uni-popup、uni-transition实现弹框与滚动动画，请使用前先确保该两组件已下载，否则无法执行
+注意：本组件基于 uni-popup、uni-transition实现弹框与滚动效果，使用前请先确保这两个组件已下载，否则无法执行
 
 ### 基本用法
 
@@ -156,7 +156,7 @@ export default {
 |item|初始化选中大类的信息，包含idType，nameType，默认为id、name	|
 |subItem|初始化选中子数据的信息，包含idType，nameType，默认为id、name|
 
-**initData使用时，其格式与result返回格式一样，故可以将result返回的值直接赋值给initData,用来做结果显示**
+**注意：initData使用时，其格式与result返回格式一样，故可以将result返回的值直接赋值给initData,用来做结果显示**
 
 #### linkage Events
 
