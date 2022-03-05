@@ -153,7 +153,7 @@ export default {
 #### initData props
 |属性名|说明|
 |:-:| :-:|
-|item|初始化选中大类的信息，包含idType，nameType，默认为id、name、sub	|
+|item|初始化选中大类的信息，包含idType，nameType，默认为id、name	|
 |subItem|初始化选中子数据的信息，包含idType，nameType，默认为id、name|
 
 **initData使用时，其格式与result返回格式一样，故可以将result返回的值直接赋值给initData,用来做结果显示**
@@ -161,14 +161,14 @@ export default {
 ### linkage Events
 
 |事件称名|说明|返回值|备注|
-|:-:|:-:|:-:|
+|:-:|:-:|:-:|备注|
 |result|组件返回的值|e={item: Object, subItem: Object}|result返回格式与initData的格式一致  |
 
 #### result 返回值
 
 |属性名|说明|
 |:-:| :-:|
-|item|选中大类的信息，包含idType，nameType，subType，默认为id、name、sub	|
+|item|选中大类的信息，包含idType，nameType，默认为id、name|
 |subItem|选中子数据的信息，包含idType，nameType，默认为id、name|
 
 ### 更多用法请查看demo /pages/examples/linkage.vue
