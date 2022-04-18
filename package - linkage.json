@@ -1,0 +1,19 @@
+{
+    "id": "ui-popup-linkage",
+    "name": "ui-popup-linkage",
+    "version": "v1.0.0",
+    "description": "基于uni-popup的双联动tab弹框，实现了双向联动、可自动滚动至所选项，支持用户自定义传入数据的keyname，H5端做了去滚动条处理， 组件实现简单",
+    "keywords": [
+        "二级联动",
+        "双向滚动",
+        "双联动",
+        "tab",
+        "弹框"
+    ],
+    "dcloudext": {
+        "category": [
+            "前端组件",
+            "通用组件"
+        ]
+    }
+}

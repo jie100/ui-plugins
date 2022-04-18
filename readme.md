@@ -1,174 +1,114 @@
 
-## 基于 uni-popup的双联动组件
-> **组件名：uni-popup-linkage**
+## 基于uni-easyinput的自动提示组件
+> **组件名：ui-autocomplete**
 
-> **关联组件： `uni-popup`、`uni-transition`**
+> **关联组件： `uni-easyinput`、`uni-icons`**
 
-> **代码块： `uiPopupLinkage`**
+> **代码块： `uiAutocomplete`**
 
-基于uni-popup的双联动tab弹框，实现了双向联动、可自动滚动至所选项，支持用户自定义传入数据的keyname，H5端做了去滚动条处理，
-组件实现简单，了解更多请查看 /pages/examples/linkage.vue
+输入自动匹配组件，实现了“节流操作”以及“最低匹配长度控制”，可自定义节流时间以及匹配开始长度，一般用于新页面中使用，组件实现简单
 
-注意：本组件基于 uni-popup、uni-transition实现弹框与滚动效果，使用前请先确保这两个组件已下载，否则无法执行
+
+注意：本组件基于uni-easyinput、uni-icons实现输入以及清楚输入记录效果，使用前请先确保这两个组件已下载，否则无法执行
 
 ### 基本用法
 
-**示例**
+**父页面示例**
+```html
+<view @click="linkTo('autocomplete')">
+	<text class="result-text" :class="{'color-gray': !(initData.name || initData)}">{{ initData.name || initData || '请选择' }}</text>
+</view>
+```
+
+```javascript
+export default {
+ data() {
+	return {
+	 // 输入框初始值
+	 initData: '',
+	}
+  },
+  onLoad() {
+	// 页面通讯-监听设置---此处很重要，否则无法接收到选择结果
+  	uni.$on('autoCompleteResult', this.getResult)
+  },
+  methods:{
+    // 获取返回的数据
+    getResult(data){
+    	this.initData = data
+    },
+    linkTo(example){
+    	const keyWords = this.initData.name || this.initData
+    	uni.navigateTo({
+    		url: '/pages/examples/' + example + '?key='+ keyWords
+    	})
+    }
+  }
+}
+```
+
+**子页面示例**
 
 ```html
-<ui-popup-linkage :propsData="propsData" @result="getResult"></ui-popup-linkage>
+<ui-autocomplete :propsData="onloadData" :initData="initData"></ui-autocomplete>
 ```
 
 ```javascript
 export default {
  data() {
   return {
-   // 源数据，必传
-   propsData: [ 
-        {			
-           "id":78,
-           "name":"管理岗",
-           "sub":[
-             { "id":80,  "name":"总经理" },
-             {"id":81,"name":"总裁" }
-		    ]
-		},
-        {
-            "id":75,
-            "name":"其他",
-            "sub":[
-                {"id":76,"name":"其他"}
-            ]
-		}
-	],
-    resultData: {}
+	  // 存储输入框初始值(来自于被跳转页面的路由传参)
+	  initData: '',
+	 }
+  },
+  onLoad(options) {
+  	this.initData = options.key
   },
   methods:{
-    // 获取返回的数据
-    getResult(data){
-        console.log('get result from component:', data)
-		this.resultData = data
-	}
-  }
-}
-
-```
-
-### 自定义触发器以及数据格式 
-
-**示例**
-
-```html
-<ui-popup-linkage :propsData="propsData" :initData="initData" :objType="objType" navHeight="400" @result="getResult">
-	<view class="result-box">
-		<text class="placeHolder" v-if="!(initData.subItem && initData.subItem.value)">请选择</text>
-		<text v-else>{{ initData.item.value + '-' + initData.subItem.value }}</text>
-	</view>
-</ui-popup-linkage>
-```
-
-```javascript
-export default {
- data() {
-  return {
-	  // 初始化数据，若不需要初始化，则该参数可以不传
-	  initData: {
-	  	item: {
-	  		code: '78',
-	  		value: '管理岗'
-	  	},
-	  	subItem: {
-	  		code: '81',
-	  		value: '总裁'
-	  	}
-	  },
-	  /* 定义数据格式，要求大类数据与子类数据中对应的keyname相同(比如都为id、name或者都为code、value)。
-	  	默认值：idType为"id"，nameType为"name"，"subType"为"sub"。哪个不同修改哪个，如下：
-	  	1，因为示例数据中idType为"code"，则修改"idType"的值为"code"
-	  	2，因为示例数据中nameType为"value"，则修改"idType"的值为"value"
-	  	3，subType的值与默认值相同，则无需修改，可以不传
-	  	注意：只需要修改与默认值不同的keyname即可，相同的可以不传，若都相同，则该参数可以不传
-	   */
-	  objType: {
-	  	idType: "code",
-	  	nameType: "value"
-	  },
-	  // 源数据，必传
-	  propsData: [ 
-	  	{			
-	  	   "code":78,
-			   "value":"管理岗",
-	  	   "sub":[
-	  		 { "code":80,  "value":"总经理" },
-	  		 {"code":81,"value":"总裁" }
-	  		]
-	  	},
-	  	{
-	  		"code":75,
-	  		"value":"其他",
-	  		"sub":[
-	  			{"code":76,"value":"其他"}
-	  		]
-	  	}
-	  ],
-  },
-  methods:{
-    // 获取返回的数据
-    getResult(data){
-        console.log('get result from component:', data)
-		this.initData = data
-	}
+    onloadData(key){
+    	return this.getAutoData(key)
+    },
+    getAutoData(key){
+    	/* 异步获取 */
+    	return new Promise((resolve, reject) => {
+    		let data = [
+    			{'id':123,'name':'深圳迈瑞股份有限公司'},
+    			{'id':223,'name':'深圳腾讯网络科技股份有限公司'},
+    			{'id':323,'name':'深圳华为有限公司'}
+    		]
+    		resolve(data)
+    	})
+    	/* 同步获取 */
+    	/* return [
+    			{'id':123,'name':'深圳迈瑞股份有限公司'},
+    			{'id':223,'name':'深圳腾讯网络科技股份有限公司'},
+    			{'id':323,'name':'深圳华为有限公司'}
+    		] */
+    }
   }
 }
 ```
+**注意：在父页面设置autoCompleteResult侦听是必须的，用来接收最终结果**
 
-
-```style
-<style lang="scss" scoped>
-	.result-box{
-		display: block;
-		width: 100vw;
-		height: 30px;
-		line-height: 30px;
-		text-align: center;
-		background-color: #eeeeee;
-		.placeHolder{
-			color: gray;
-		}
-	}
-</style>
-```
 
 ## API
 
-#### linkage Props 
+#### autocomplete Props 
 
 |属性名|类型|默认值|是否必传|说明|
 |:-:|:-:|:-:|:-:|:-:|
-|propsData|Array|[]|是|源数据，大类与子类必须具备相同的id、name|
-|initData|Object|{}|否|需要定义默认选中项时传值|
-|objType|Object|{idType:id,nameType:name,subType:sub}|否|当propsData中对应的keyname（id、name、sub）与默认值不同时传值|
-|navHeight|Number|300|否|当需要改变展示区高度时传值|
+|propsData|Function|[]|是|返回一个一维数组的函数，数组每一项必须有id、name|
+|initData|String|''|否|输入框初始值|
+|placeHolderText|String|'请输入...'|否|未输入时的提示语|
+|autoFocus|Boolean|false|否|是否自动获取焦点|
+|focusMatch|Boolean|true|否|是否在获焦时匹配|
+|searchSize|Number|0|否|性能参数：自动补充开始长度（即从输入第几个字开始匹配）|
+|wait|Number|400|否|性能参数：节流间隔时间（毫秒）|
 
-#### initData props
-|属性名|说明|
-|:-:| :-:|
-|item|初始化选中大类的信息，包含idType，nameType，默认为id、name	|
-|subItem|初始化选中子数据的信息，包含idType，nameType，默认为id、name|
-
-**注意：initData使用时，其格式与result返回格式一样，故可以将result返回的值直接赋值给initData,用来做结果显示**
-
-#### linkage Events
+#### autocomplete Events
 
 |事件称名|说明|返回值|备注|
 |:-:|:-:|:-:|:-:|
-|result|组件返回的值|e={item: Object, subItem: Object}|result返回格式与initData的格式一致  |
+|autoCompleteResult|页面通讯事件|e={id: Number OR String, name: String}| 必须在父页面设置此侦听，返回值为最终选择结果 |
 
-#### result 返回值
-
-|属性名|说明|
-|:-:| :-:|
-|item|选中大类的信息，包含idType，nameType，默认为id、name|
-|subItem|选中子数据的信息，包含idType，nameType，默认为id、name|
-
-### 更多用法请查看demo /pages/examples/linkage.vue
+### 更多用法[请查看](https://github.com/jie100/ui-plugins.git)-/pages/index/index.vue

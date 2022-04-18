@@ -1,6 +1,6 @@
 <template>
 	<view class="content">
-		<ui-popup-linkage :propsData="propsData" :objType="objType" :navHeight="300" @result="getResult">
+		<ui-popup-linkage :propsData="listData" :objType="objType" :navHeight="300" @result="getResult">
 			<!-- <view class="result-box">
 				<text class="placeHolder" v-if="!(initData.subItem && initData.subItem.value)">请选择</text>
 				<text v-else>{{ initData.item.value + '-' + initData.subItem.value }}</text>

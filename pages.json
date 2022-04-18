@@ -3,16 +3,21 @@
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "基于uni-popup的UI组件"
+				"navigationBarTitleText": "UI组件"
 			}
 		},
 		{
-				"path": "pages/examples/linkage",
-				"style": {
-					"navigationBarTitleText": "二级联动弹框-linkage"
-				}
+			"path": "pages/examples/linkage",
+			"style": {
+				"navigationBarTitleText": "二级联动弹框-linkage"
 			}
-		
+		},
+		{
+			"path": "pages/examples/autocomplete",
+			"style": {
+				"navigationBarTitleText": "自动补全组件-autocomplete"
+			}
+		}
 	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

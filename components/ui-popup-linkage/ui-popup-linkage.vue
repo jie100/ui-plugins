@@ -18,7 +18,7 @@
 					<scroll-view class="tabs" scroll-y scroll-with-animation :scroll-into-view="getScrollPelId" >
 						<view class="tabItem" v-for="item in listData" :key="item[objType.idType]" :class="{'tabItemActive': item.checked}" :id="`scrollPel_${item[objType.idType]}`" @tap="selectItem(item)">{{ item[objType.nameType] }}</view>
 					</scroll-view>
-					<scroll-view class="select-area" scroll-y scroll-with-animation :scroll-into-view="getScrollElId" @scroll="scroll" ref='scroll_view'>
+					<scroll-view class="select-area" scroll-y scroll-with-animation :scroll-into-view="getScrollElId" @scroll="scroll">
 						<view class="part" v-for="item in listData" :key="item[objType.idType]" :id="`scroll_${item[objType.idType]}`">
 							<text class="partTitle">{{ item[objType.nameType] }}</text>
 							<view class="part-contents">
@@ -106,12 +106,15 @@
 					this.initDataObj = val
 				}
 			},
-			'propsData'(val){
-				// console.log('props data changed', val)
-				this.listData = val
-				this.scrollRefs = val.map(item=>{return 'scroll_'+item[this.objType.idType]})
-				// console.log( this.initDataObj )
-				if( this.initDataObj.hasOwnProperty('item')&&this.initDataObj.item[this.objType.idType] ) this.initSelect(this.initDataObj)
+			'propsData': {
+				immediate: true,
+				handler(val){
+					// console.log('props data changed', val)
+					this.listData = val
+					this.scrollRefs = val.map(item=>{return 'scroll_'+item[this.objType.idType]})
+					// console.log( this.initDataObj )
+					if( this.initDataObj.hasOwnProperty('item')&&this.initDataObj.item[this.objType.idType] ) this.initSelect(this.initDataObj)
+				}
 			}
 		},
 		methods:{
@@ -212,6 +215,7 @@
 						}
 					}
 				}
+				this.scrollElId = ''
 			}, 100)
 		},
 		computed:{
